@@ -78,18 +78,21 @@ function fillFinalTemplate() {
   rl.on("line", (line) => {
     let matchesArr;
     if ((matchesArr = line.match(regexp))) {
+      let formattedLine = line;
       for (matchItem of matchesArr) {
         const component = matchItem.slice(2, matchItem.length - 2);
         if (component in componentsData) {
-          const componentRegexp = new RegExp(`\{\{${component}\}\}`, "i");
-          finalTemplateOutput.write(
-            line
-              .replace(componentRegexp, componentsData[component])
-              .replace(regexp, "")
+          const componentRegexp = new RegExp(`\{\{${component}\}\}`, "gi");
+          formattedLine = formattedLine.replace(
+            componentRegexp,
+            componentsData[component]
           );
-          finalTemplateOutput.write("\n");
+        } else {
+          formattedLine = "";
         }
       }
+      finalTemplateOutput.write(formattedLine);
+      finalTemplateOutput.write("\n");
     } else {
       finalTemplateOutput.write(line);
       finalTemplateOutput.write("\n");
