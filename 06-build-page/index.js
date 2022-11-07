@@ -70,7 +70,7 @@ function fillFinalTemplate() {
   const templateInput = fs.createReadStream(pathToTemplate, "utf-8");
 
   const rl = readline.createInterface(templateInput);
-  const regexp = /\{\{\w+\}\}/gi;
+  const regexp = /\{\{\w+?\}\}/gi;
   const finalTemplateOutput = fs.createWriteStream(pathToFinalTemplate);
 
   emptyFile(pathToFinalTemplate);
@@ -83,7 +83,9 @@ function fillFinalTemplate() {
         if (component in componentsData) {
           const componentRegexp = new RegExp(`\{\{${component}\}\}`, "gi");
           finalTemplateOutput.write(
-            line.replace(componentRegexp, componentsData[component])
+            line
+              .replace(componentRegexp, componentsData[component])
+              .replace(regexp, "")
           );
           finalTemplateOutput.write("\n");
         }
