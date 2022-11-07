@@ -81,7 +81,7 @@ function fillFinalTemplate() {
       for (matchItem of matchesArr) {
         const component = matchItem.slice(2, matchItem.length - 2);
         if (component in componentsData) {
-          const componentRegexp = new RegExp(`\{\{${component}\}\}`, "gi");
+          const componentRegexp = new RegExp(`\{\{${component}\}\}`, "i");
           finalTemplateOutput.write(
             line
               .replace(componentRegexp, componentsData[component])
