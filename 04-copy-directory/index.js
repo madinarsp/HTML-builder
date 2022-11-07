@@ -4,7 +4,7 @@ const path = require("path");
 const pathToOrigFolder = path.join(__dirname, "files");
 const pathToCopiedFolder = path.join(__dirname, "files-copy");
 
-async function copyFolder(origFolder, finalFolder) {
+async function copyDir(origFolder, finalFolder) {
   await fsPromisesModule.mkdir(finalFolder, { recursive: true });
 
   const folderContent = await fsPromisesModule.readdir(origFolder, {
@@ -26,7 +26,7 @@ async function copyFolder(origFolder, finalFolder) {
       const folderName = contentItem.name;
       const pathToOrigFolder = path.join(origFolder, folderName);
       const pathToCopiedFolder = path.join(finalFolder, folderName);
-      copyFolder(pathToOrigFolder, pathToCopiedFolder);
+      copyDir(pathToOrigFolder, pathToCopiedFolder);
     }
   }
 
@@ -45,5 +45,5 @@ async function copyFolder(origFolder, finalFolder) {
   }
 }
 
-copyFolder(pathToOrigFolder, pathToCopiedFolder);
+copyDir(pathToOrigFolder, pathToCopiedFolder);
 
